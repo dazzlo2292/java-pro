@@ -1,4 +1,5 @@
 rootProject.name = 'java-pro'
 include 'hw1-reflection'
 include 'hw3-stream_api'
+include 'hw4-multithreading'
 
