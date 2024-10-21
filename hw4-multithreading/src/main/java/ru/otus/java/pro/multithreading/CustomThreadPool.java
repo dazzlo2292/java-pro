@@ -10,9 +10,8 @@ public class CustomThreadPool implements Executor {
     private final List<Runnable> tasks = new LinkedList<>();
 
     public CustomThreadPool(int threadsCount) {
-        Object monitor = new Object();
         for (int i = 0; i < threadsCount; i++) {
-            new Thread(new Worker(this, tasks, monitor)).start();
+            new Thread(new Worker(this, tasks)).start();
         }
     }
 
@@ -22,12 +21,18 @@ public class CustomThreadPool implements Executor {
 
     public void shutdown() {
         isRunning = false;
+        synchronized (tasks) {
+            tasks.notifyAll();
+        }
     }
 
     @Override
     public void execute(Runnable command) {
         if (isRunning) {
-            tasks.add(command);
+            synchronized (tasks) {
+                tasks.add(command);
+                tasks.notifyAll();
+            }
         } else {
             throw new IllegalStateException("ThreadPool is shutdown!");
         }
