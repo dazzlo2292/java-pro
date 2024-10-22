@@ -31,7 +31,7 @@ public class CustomThreadPool implements Executor {
         if (isRunning) {
             synchronized (tasks) {
                 tasks.add(command);
-                tasks.notifyAll();
+                tasks.notify();
             }
         } else {
             throw new IllegalStateException("ThreadPool is shutdown!");
