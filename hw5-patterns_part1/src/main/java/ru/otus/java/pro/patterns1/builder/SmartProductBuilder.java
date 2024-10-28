@@ -1,9 +1,14 @@
 package ru.otus.java.pro.patterns1.builder;
 
-public class SmartProductBuilder implements ProductBuilder {
+public final class SmartProductBuilder implements ProductBuilder {
     private int id;
     private String title;
     private String description;
+    private int cost;
+    private int weight;
+    private int width;
+    private int length;
+    private int height;
 
     @Override
     public SmartProductBuilder id(int id) {
@@ -23,7 +28,37 @@ public class SmartProductBuilder implements ProductBuilder {
         return this;
     }
 
+    @Override
+    public SmartProductBuilder cost(int cost) {
+        this.cost = cost;
+        return this;
+    }
+
+    @Override
+    public SmartProductBuilder weight(int weight) {
+        this.weight = weight;
+        return this;
+    }
+
+    @Override
+    public SmartProductBuilder width(int width) {
+        this.width = width;
+        return this;
+    }
+
+    @Override
+    public SmartProductBuilder length(int length) {
+        this.length = length;
+        return this;
+    }
+
+    @Override
+    public SmartProductBuilder height(int height) {
+        this.height = height;
+        return this;
+    }
+
     public Product build() {
-        return new Product(this.id, this.title, this.description);
+        return new Product(this.id, this.title, this.description, this.cost, this.weight, this.width, this.length, this.height);
     }
 }
