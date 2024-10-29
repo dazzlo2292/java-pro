@@ -36,14 +36,13 @@ public class SmallAtFirst implements Iterator<Doll> {
         }
 
         for (int i = minSize; i <= maxSize; i++) {
-            for (NestedDoll nestedDoll : nestedDolls) {
-                for (Doll doll : nestedDoll.getDolls()) {
-                    if (doll.size() == i) {
-                        stack.add(doll);
-                    }
-                }
-            }
+            int tempI = i;
+            nestedDolls.stream()
+                    .flatMap(nestedDoll -> nestedDoll.getDolls().stream())
+                    .filter(doll -> doll.size() == tempI)
+                    .forEach(stack::add);
         }
+
         return stack;
     }
 

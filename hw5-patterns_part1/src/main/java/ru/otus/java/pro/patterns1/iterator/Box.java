@@ -3,6 +3,7 @@ package ru.otus.java.pro.patterns1.iterator;
 import ru.otus.java.pro.patterns1.iterator.dolls.NestedDoll;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Box {
@@ -13,7 +14,7 @@ public class Box {
     }
 
     public List<NestedDoll> getNestedDolls() {
-        return nestedDolls;
+        return Collections.unmodifiableList(nestedDolls);
     }
 
     public void addNestedDoll(NestedDoll nestedDoll) {
