@@ -12,6 +12,8 @@
             <option value="$PROJECT_DIR$/hw1-reflection" />
             <option value="$PROJECT_DIR$/hw3-stream_api" />
             <option value="$PROJECT_DIR$/hw4-multithreading" />
+            <option value="$PROJECT_DIR$/hw5-patterns" />
+            <option value="$PROJECT_DIR$/hw5-patterns_part1" />
           </set>
         </option>
       </GradleProjectSettings>
