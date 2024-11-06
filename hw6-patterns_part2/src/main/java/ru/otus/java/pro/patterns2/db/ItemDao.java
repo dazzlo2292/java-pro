@@ -25,7 +25,7 @@ public class ItemDao {
                 items.add(item);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Query execution error", e);
         }
         return items;
     }
@@ -36,7 +36,7 @@ public class ItemDao {
             ps.setInt(2,item.price());
             ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Query execution error", e);
         }
     }
 
@@ -46,7 +46,7 @@ public class ItemDao {
             ps.setInt(2, item.id());
             ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Query execution error", e);
         }
     }
 }

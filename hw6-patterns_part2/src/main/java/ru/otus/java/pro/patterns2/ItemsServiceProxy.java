@@ -21,6 +21,9 @@ public class ItemsServiceProxy {
             connection.commit();
         } catch (SQLException e) {
             connection.rollback();
+            throw e;
+        } finally {
+            connection.setAutoCommit(true);
         }
     }
 
@@ -31,6 +34,9 @@ public class ItemsServiceProxy {
             connection.commit();
         } catch (SQLException e) {
             connection.rollback();
+            throw e;
+        } finally {
+            connection.setAutoCommit(true);
         }
     }
 }
