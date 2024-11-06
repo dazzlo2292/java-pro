@@ -4,4 +4,5 @@ include 'hw3-stream_api'
 include 'hw4-multithreading'
 include 'hw5-patterns'
 include 'hw5-patterns_part1'
+include 'hw6-patterns_part2'
 
