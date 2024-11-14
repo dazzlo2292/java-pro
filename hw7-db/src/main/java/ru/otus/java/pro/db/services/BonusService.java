@@ -1,9 +1,11 @@
-package ru.otus.java.pro.db;
+package ru.otus.java.pro.db.services;
+
+import ru.otus.java.pro.db.DataSource;
 
 import java.sql.SQLException;
 
 public class BonusService {
-    private DataSource dataSource;
+    private final DataSource dataSource;
 
     public BonusService(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -11,8 +13,7 @@ public class BonusService {
 
     public void init() throws SQLException {
         dataSource.getStatement().executeUpdate(
-                "" +
-                        "create table if not exists bonuses (" +
+                "create table if not exists bonuses (" +
                         "    id          bigserial primary key," +
                         "    amount      int," +
                         "    login       varchar(255)" +

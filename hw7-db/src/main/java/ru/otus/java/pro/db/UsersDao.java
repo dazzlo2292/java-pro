@@ -8,27 +8,15 @@ import java.util.List;
 import java.util.Optional;
 
 public class UsersDao {
-    private DataSource dataSource;
+    private final DataSource dataSource;
 
     public UsersDao(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
-    public void init() throws SQLException {
-        dataSource.getStatement().executeUpdate(
-                "" +
-                        "create table if not exists users (" +
-                        "    id          bigserial primary key," +
-                        "    login       varchar(255)," +
-                        "    password    varchar(255)," +
-                        "    nickname    varchar(255)" +
-                        ")"
-        );
-    }
-
     public Optional<User> getUserByLoginAndPassword(String login, String password) {
-        try (ResultSet rs = dataSource.getStatement().executeQuery("select * from users where login = '" + login + "' AND password = '" + password + "'")) {
-            return Optional.of(new User(rs.getLong("id"), rs.getString("login"), rs.getString("password"), rs.getString("nickname")));
+        try (ResultSet rs = dataSource.getStatement().executeQuery("select * from users_tab where login = '" + login + "' AND password = '" + password + "'")) {
+            return Optional.of(new User(rs.getInt("id"), rs.getString("login"), rs.getString("password"), rs.getString("nickname")));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -36,9 +24,9 @@ public class UsersDao {
     }
 
     public Optional<User> getUserById(Long id) {
-        try (ResultSet rs = dataSource.getStatement().executeQuery("select * from users where id = " + id)) {
-            if (rs.next() != false) {
-                return Optional.of(new User(rs.getLong("id"), rs.getString("login"), rs.getString("password"), rs.getString("nickname")));
+        try (ResultSet rs = dataSource.getStatement().executeQuery("select * from users_tab where id = " + id)) {
+            if (rs.next()) {
+                return Optional.of(new User(rs.getInt("id"), rs.getString("login"), rs.getString("password"), rs.getString("nickname")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -48,9 +36,9 @@ public class UsersDao {
 
     public List<User> getAllUsers() {
         List<User> result = new ArrayList<>();
-        try (ResultSet rs = dataSource.getStatement().executeQuery("select * from users")) {
-            while (rs.next() != false) {
-                result.add(new User(rs.getLong("id"), rs.getString("login"), rs.getString("password"), rs.getString("nickname")));
+        try (ResultSet rs = dataSource.getStatement().executeQuery("select * from users_tab")) {
+            while (rs.next()) {
+                result.add(new User(rs.getInt("id"), rs.getString("login"), rs.getString("password"), rs.getString("nickname")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -59,13 +47,13 @@ public class UsersDao {
     }
 
     public void save(User user) throws SQLException {
-        dataSource.getStatement().executeUpdate(String.format("insert into users (login, password, nickname) values ('%s', '%s', '%s');", user.getLogin(), user.getPassword(), user.getNickname()));
+        dataSource.getStatement().executeUpdate(String.format("insert into users_tab (login, password, nickname) values ('%s', '%s', '%s');", user.getLogin(), user.getPassword(), user.getNickname()));
     }
 
     public void saveAll(List<User> users) throws SQLException {
         dataSource.getConnection().setAutoCommit(false);
         for (User u : users) {
-            dataSource.getStatement().executeUpdate(String.format("insert into users (login, password, nickname) values ('%s', '%s', '%s');", u.getLogin(), u.getPassword(), u.getNickname()));
+            dataSource.getStatement().executeUpdate(String.format("insert into users_tab (login, password, nickname) values ('%s', '%s', '%s');", u.getLogin(), u.getPassword(), u.getNickname()));
         }
         dataSource.getConnection().setAutoCommit(true);
     }

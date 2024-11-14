@@ -1,9 +1,12 @@
-package ru.otus.java.pro.db;
+package ru.otus.java.pro.db.services;
+
+import ru.otus.java.pro.db.User;
+import ru.otus.java.pro.db.UsersDao;
 
 import java.sql.*;
 
 public class AuthenticationService {
-    private UsersDao usersDao;
+    private final UsersDao usersDao;
 
     public AuthenticationService(UsersDao usersDao) {
         this.usersDao = usersDao;

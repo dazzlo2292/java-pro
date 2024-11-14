@@ -1,7 +1,10 @@
-package ru.otus.java.pro.db;
+package ru.otus.java.pro.db.services;
+
+import ru.otus.java.pro.db.User;
+import ru.otus.java.pro.db.UsersDao;
 
 public class UsersStatisticService {
-    private UsersDao usersDao;
+    private final UsersDao usersDao;
 
     public UsersStatisticService(UsersDao usersDao) {
         this.usersDao = usersDao;

@@ -1,44 +1,58 @@
 package ru.otus.java.pro.db;
 
-@RepositoryTable(title = "users")
+import ru.otus.java.pro.db.annotations.*;
+
+@RepositoryTable(title = "users_tab")
 public class User {
-    @RepositoryIdField
-    private Long id;
-    @RepositoryField
+    @RepositoryDataField(title = "id")
+    @RepositoryIdField(title = "id")
+    private Integer id;
+    @RepositoryDataField(title = "login")
+    @RepositoryInsertField(title = "login")
     private String login;
-    @RepositoryField
+    @RepositoryDataField(title = "password")
+    @RepositoryInsertField(title = "password")
     private String password;
-    @RepositoryField
+    @RepositoryDataField(title = "nickname")
+    @RepositoryInsertField(title = "nickname")
     private String nickname;
 
-    public Long getId() {
+    @RepositoryGetter(field = "id")
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    @RepositorySetter(field = "id")
+    public void setId(Integer id) {
         this.id = id;
     }
 
+    @RepositoryGetter(field = "login")
     public String getLogin() {
         return login;
     }
 
+    @RepositorySetter(field = "login")
     public void setLogin(String login) {
         this.login = login;
     }
 
+    @RepositoryGetter(field = "password")
     public String getPassword() {
         return password;
     }
 
+    @RepositorySetter(field = "password")
     public void setPassword(String password) {
         this.password = password;
     }
 
+    @RepositoryGetter(field = "nickname")
     public String getNickname() {
         return nickname;
     }
 
+    @RepositorySetter(field = "nickname")
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
@@ -46,7 +60,7 @@ public class User {
     public User() {
     }
 
-    public User(Long id, String login, String password, String nickname) {
+    public User(Integer id, String login, String password, String nickname) {
         this.id = id;
         this.login = login;
         this.password = password;
