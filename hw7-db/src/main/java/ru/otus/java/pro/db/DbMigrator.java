@@ -16,23 +16,23 @@ public class DbMigrator {
 
     private final String MIGRATION_FILE_NAME = "dbinit.sql";
 
-    Set<String> completedQueries;
+    Set<String> completedScripts;
 
     public DbMigrator(DataSource dataSource) {
         this.dataSource = dataSource;
-        completedQueries = new HashSet<>();
+        completedScripts = new HashSet<>();
     }
 
     public void migrate() throws SQLException {
         createMigrationTable();
-        findAllCompletedQueries();
+        findAllCompletedScripts();
 
         try {
-            for (String query : readFile(MIGRATION_FILE_NAME)) {
-                if (!completedQueries.contains(query)) {
+            if (!completedScripts.contains(MIGRATION_FILE_NAME)) {
+                for (String query : readFile(MIGRATION_FILE_NAME)) {
                     dataSource.getStatement().executeUpdate(query);
-                    addMigrationQueryInHistory(query);
                 }
+                addMigrationScriptInHistory(MIGRATION_FILE_NAME);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -43,29 +43,29 @@ public class DbMigrator {
         dataSource.getStatement().executeUpdate("""
                 create table if not exists migration_history_tab
                 (
-                    query varchar(1000),
+                    filename varchar(100),
                     created_at timestamp default current_timestamp
                 )
                 """);
     }
 
-    private void addMigrationQueryInHistory(String query) {
+    private void addMigrationScriptInHistory(String script) {
         try(PreparedStatement ps = dataSource.getConnection().prepareStatement("""
-                insert into migration_history_tab (query) values (?);
+                insert into migration_history_tab (filename) values (?);
                 """)) {
-            ps.setString(1, query);
+            ps.setString(1, script);
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    private void findAllCompletedQueries() throws SQLException {
+    private void findAllCompletedScripts() throws SQLException {
         try(ResultSet rs = dataSource.getStatement().executeQuery("""
-                select query from migration_history_tab;
+                select filename from migration_history_tab;
                 """)) {
             while (rs.next()) {
-                completedQueries.add(rs.getString(1));
+                completedScripts.add(rs.getString(1));
             }
         }
     }
