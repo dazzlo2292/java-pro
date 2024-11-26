@@ -5,4 +5,5 @@ include 'hw4-multithreading'
 include 'hw5-patterns'
 include 'hw5-patterns_part1'
 include 'hw6-patterns_part2'
+include 'hw7-db'
 
