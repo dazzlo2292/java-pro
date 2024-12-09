@@ -14,12 +14,10 @@ public class ProductService {
     private final ProductsRepository productsRepository;
 
     public Product getProductById(int id) {
-        for (Product p : productsRepository.getProducts()) {
-            if (p.getId() == id) {
-                return p;
-            }
-        }
-        return null;
+        return productsRepository.getProducts().stream()
+                .filter(p -> p.getId() == id)
+                .findFirst()
+                .orElse(null);
     }
 
     public List<Product> getAllProducts() {
@@ -33,12 +31,9 @@ public class ProductService {
     }
 
     private int nextId() {
-        int max = 0;
-        for (Product p : productsRepository.getProducts()) {
-            if (p.getId() > max) {
-                max = p.getId();
-            }
-        }
-        return max + 1;
+        return productsRepository.getProducts().stream()
+                .mapToInt(Product::getId)
+                .max()
+                .orElse(0) + 1;
     }
 }
