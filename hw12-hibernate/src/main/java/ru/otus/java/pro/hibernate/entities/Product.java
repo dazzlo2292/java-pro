@@ -1,6 +1,9 @@
-package ru.otus.java.pro.hibernate;
+package ru.otus.java.pro.hibernate.entities;
 
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "products_tab")
@@ -16,13 +19,28 @@ public class Product {
     @Column(name = "price")
     private int price;
 
+    @ManyToMany
+    @JoinTable (
+            name = "customers_products_tab",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "customer_id")
+    )
+    private List<Customer> customers;
+
     public Product() {
+    }
+
+    public Product(String title, int price) {
+        this.title = title;
+        this.price = price;
+        this.customers = new ArrayList<>();
     }
 
     public Product(int id, String title, int price) {
         this.id = id;
         this.title = title;
         this.price = price;
+        this.customers = new ArrayList<>();
     }
 
     public int getId() {
@@ -47,5 +65,17 @@ public class Product {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public List<Customer> getCustomers() {
+        return customers;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", price=" + price + "}";
     }
 }

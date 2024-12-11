@@ -14,7 +14,7 @@
 
         <property name="hbm2dd.auto">create</property>
 
-        <mapping class="ru.otus.java.pro.hibernate.Customer"/>
-        <mapping class="ru.otus.java.pro.hibernate.Product"/>
+        <mapping class="ru.otus.java.pro.hibernate.entities.Customer"/>
+        <mapping class="ru.otus.java.pro.hibernate.entities.Product"/>
     </session-factory>
 </hibernate-configuration>

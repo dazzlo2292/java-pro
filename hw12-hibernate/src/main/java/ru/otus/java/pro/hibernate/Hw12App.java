@@ -1,24 +1,20 @@
 package ru.otus.java.pro.hibernate;
 
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import ru.otus.java.pro.hibernate.configurations.JavaBased;
+
 
 public class Hw12App {
     public static void main(String[] args) {
+        try (SessionFactory factory = JavaBased.prepare()) {
+            DataFiller dataFiller = new DataFiller(factory);
+            dataFiller.start();
 
-        SessionFactory factory = new Configuration()
-                .configure("hibernate.cfg.xml")
-                .buildSessionFactory();
-
-        Session session = factory.getCurrentSession();
-        session.beginTransaction();
-
-        Customer customer = session.get(Customer.class, 1);
-        Customer inserted = session.merge(customer);
-
-        session.getTransaction().commit();
-
-        session.close();
+            CommandHandler commandHandler = new CommandHandler(factory);
+            Console console = new Console(commandHandler);
+            console.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
