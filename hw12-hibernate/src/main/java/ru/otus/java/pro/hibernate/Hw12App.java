@@ -2,6 +2,8 @@ package ru.otus.java.pro.hibernate;
 
 import org.hibernate.SessionFactory;
 import ru.otus.java.pro.hibernate.configurations.JavaBased;
+import ru.otus.java.pro.hibernate.daos.CustomerDao;
+import ru.otus.java.pro.hibernate.daos.ProductDao;
 
 
 public class Hw12App {
@@ -10,8 +12,10 @@ public class Hw12App {
             DataFiller dataFiller = new DataFiller(factory);
             dataFiller.start();
 
-            CommandHandler commandHandler = new CommandHandler(factory);
-            Console console = new Console(commandHandler);
+            CustomerDao customerDao = new CustomerDao(factory);
+            ProductDao productDao = new ProductDao(factory);
+
+            Console console = new Console(customerDao, productDao);
             console.start();
         } catch (Exception e) {
             e.printStackTrace();

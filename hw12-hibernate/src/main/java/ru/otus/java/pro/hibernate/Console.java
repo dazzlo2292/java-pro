@@ -1,12 +1,19 @@
 package ru.otus.java.pro.hibernate;
 
+import ru.otus.java.pro.hibernate.daos.CustomerDao;
+import ru.otus.java.pro.hibernate.daos.ProductDao;
+import ru.otus.java.pro.hibernate.entities.Customer;
+import ru.otus.java.pro.hibernate.entities.Product;
+
 import java.util.Scanner;
 
 public class Console {
-    private final CommandHandler commandHandler;
+    private final CustomerDao customerDao;
+    private final ProductDao productDao;
 
-    public Console(CommandHandler commandHandler) {
-        this.commandHandler = commandHandler;
+    public Console(CustomerDao customerDao, ProductDao productDao) {
+        this.customerDao = customerDao;
+        this.productDao = productDao;
     }
 
     public void start() {
@@ -38,7 +45,7 @@ public class Console {
                         break;
                     }
                     try {
-                        commandHandler.getProducts(Integer.parseInt(options[1]));
+                        customerDao.getProducts(Integer.parseInt(options[1]));
                     } catch (NumberFormatException e) {
                         e.printStackTrace();
                     }
@@ -49,7 +56,7 @@ public class Console {
                         break;
                     }
                     try {
-                        commandHandler.getCustomers(Integer.parseInt(options[1]));
+                        productDao.getCustomers(Integer.parseInt(options[1]));
                     } catch (NumberFormatException e) {
                         e.printStackTrace();
                     }
@@ -61,7 +68,13 @@ public class Console {
                     }
                     try {
                         String type = options[1];
-                        commandHandler.deleteEntity(type, Integer.parseInt(options[2]));
+                        int id = Integer.parseInt(options[2]);
+                        if (type.equals("product")) {
+                            productDao.delete(Product.class, id);
+                        }
+                        if (type.equals("customer")) {
+                            customerDao.delete(Customer.class, id);
+                        }
                     } catch (NumberFormatException e) {
                         e.printStackTrace();
                     }
