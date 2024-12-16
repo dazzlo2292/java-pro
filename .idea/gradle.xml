@@ -10,12 +10,15 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/hw1-reflection" />
+            <option value="$PROJECT_DIR$/hw10-spring_context" />
+            <option value="$PROJECT_DIR$/hw11-spring_boot" />
             <option value="$PROJECT_DIR$/hw3-stream_api" />
             <option value="$PROJECT_DIR$/hw4-multithreading" />
             <option value="$PROJECT_DIR$/hw5-patterns" />
             <option value="$PROJECT_DIR$/hw5-patterns_part1" />
             <option value="$PROJECT_DIR$/hw6-patterns_part2" />
             <option value="$PROJECT_DIR$/hw7-db" />
+            <option value="$PROJECT_DIR$/hw9-servlets" />
           </set>
         </option>
       </GradleProjectSettings>
