@@ -24,8 +24,17 @@ public class DataFiller {
         c2.getPhones().add(new Phone("79998887722", c2));
         c2.getPhones().add(new Phone("79998887723", c2));
 
-        session.persist(c1);
-        session.persist(c2);
+        if (c1.getId() == 0) {
+            session.persist(c1);
+        } else {
+            session.merge(c1);
+        }
+
+        if (c2.getId() == 0) {
+            session.persist(c2);
+        } else {
+            session.merge(c2);
+        }
 
         session.getTransaction().commit();
         session.close();
