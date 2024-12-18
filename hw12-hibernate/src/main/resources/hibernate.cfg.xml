@@ -12,7 +12,7 @@
         <property name="show_sql">true</property>
         <property name="current_session_context_class">thread</property>
 
-        <property name="hbm2dd.auto">create</property>
+        <property name="hbm2ddl.auto">create</property>
 
         <mapping class="ru.otus.java.pro.hibernate.entities.Customer"/>
         <mapping class="ru.otus.java.pro.hibernate.entities.Product"/>
