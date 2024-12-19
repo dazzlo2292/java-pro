@@ -1,0 +1,13 @@
+server:
+  port: 8089
+  servlet:
+    context-path: /app
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/otus_db
+    username: otus
+    password: otus
+logging:
+  level:
+    org.springframework.jdbc.core.JdbcTemplate: TRACE
