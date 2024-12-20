@@ -2,7 +2,6 @@ package ru.otus.java.pro.spring.data.jdbc.entities;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.PersistenceCreator;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.domain.Persistable;
 import org.springframework.data.relational.core.mapping.Column;
@@ -26,9 +25,8 @@ public class Game implements Persistable<UUID> {
     @Transient
     private boolean isNew;
 
-    @PersistenceCreator
-    public Game(String title, String genre) {
-        this.uuid = UUID.randomUUID();
+    public Game(UUID uuid, String title, String genre) {
+        this.uuid = uuid;
         this.title = title;
         this.genre = genre;
     }

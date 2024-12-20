@@ -1,6 +1,7 @@
-package ru.otus.java.pro.spring.data.jdbc;
+package ru.otus.java.pro.spring.data.jdbc.services;
 
 import org.springframework.stereotype.Service;
+import ru.otus.java.pro.spring.data.jdbc.dtos.GameDto;
 import ru.otus.java.pro.spring.data.jdbc.entities.Game;
 import ru.otus.java.pro.spring.data.jdbc.repositories.GamesRepository;
 
@@ -16,7 +17,12 @@ public class GamesService {
         this.gamesRepository = gamesRepository;
     }
 
-    public Game createNewGame(Game newGame) {
+    public Game createNewGame(GameDto gameDto) {
+        if (gameDto.getUuid() == null) {
+            gameDto.setUuid(UUID.randomUUID());
+        }
+
+        Game newGame = new Game(gameDto.getUuid(), gameDto.getTitle(), gameDto.getGenre());
         if (!gamesRepository.existsById(newGame.getUuid())) {
             newGame.setNew(true);
         }
