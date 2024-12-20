@@ -7,12 +7,10 @@ import ru.otus.java.pro.spring.data.jdbc.dtos.GamesPageDto;
 import ru.otus.java.pro.spring.data.jdbc.entities.Game;
 import ru.otus.java.pro.spring.data.jdbc.services.GamesService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/games")
