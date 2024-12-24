@@ -22,7 +22,7 @@ public class Dispatcher {
 
     public void execute(HttpRequest httpRequest, OutputStream out) throws IOException {
         try {
-            if (httpRequest.getMethod().equals(HttpMethod.GET) && httpRequest.getUri().equals("/shutdown")) {
+            if (httpRequest.getMethod() == (HttpMethod.GET) && httpRequest.getHost().equals("/shutdown")) {
                 shutdownRequestProcessor.execute(httpRequest, out);
                 return;
             }

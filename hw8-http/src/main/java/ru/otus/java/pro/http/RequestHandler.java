@@ -3,35 +3,25 @@ package ru.otus.java.pro.http;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 
 public class RequestHandler {
     private static final Logger logger = LogManager.getLogger(RequestHandler.class.getName());
 
-    private final byte[] buffer;
     private final Socket connection;
     private final OutputStream out;
     private final InputStream in;
 
     public RequestHandler(ExecutorService pool, Socket connection, Dispatcher dispatcher, int maxRequestSize) throws IOException {
-        this.buffer = new byte[maxRequestSize];
         this.connection = connection;
         this.out = connection.getOutputStream();
         this.in = connection.getInputStream();
 
         pool.execute(()-> {
             try {
-                int n = in.read(buffer);
-                if (n < 1) {
-                    return;
-                }
-                String rawRequest = new String(buffer, 0, n);
-
-                HttpRequest httpRequest = new HttpRequest(rawRequest);
+                HttpRequest httpRequest = new HttpRequest(in, maxRequestSize);
 
                 dispatcher.execute(httpRequest, out);
             } catch (IOException e) {
