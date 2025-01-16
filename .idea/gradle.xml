@@ -17,11 +17,10 @@
             <option value="$PROJECT_DIR$/hw14-spring_data_jdbc" />
             <option value="$PROJECT_DIR$/hw3-stream_api" />
             <option value="$PROJECT_DIR$/hw4-multithreading" />
-            <option value="$PROJECT_DIR$/hw5-patterns" />
             <option value="$PROJECT_DIR$/hw5-patterns_part1" />
             <option value="$PROJECT_DIR$/hw6-patterns_part2" />
-            <option value="$PROJECT_DIR$/hw8-http" />
             <option value="$PROJECT_DIR$/hw7-db" />
+            <option value="$PROJECT_DIR$/hw8-http" />
             <option value="$PROJECT_DIR$/hw9-servlets" />
           </set>
         </option>
