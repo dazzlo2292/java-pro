@@ -13,4 +13,5 @@ include 'hw12-hibernate'
 include 'hw13-jpql'
 include 'hw14-spring_data_jdbc'
 include 'hw16-serialization'
+include 'hw2-unittests'
 
