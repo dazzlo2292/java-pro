@@ -20,13 +20,12 @@ public class Hw16App {
         String FILE_PATH = "hw16-serialization/src/main/resources/sms.json";
         String JSON_FILE_RESULT_PATH = "hw16-serialization/src/main/resources/result.json";
 
-        //JSON
         ObjectMapper jsonMapper = new ObjectMapper();
-        jsonMapper.enable(SerializationFeature.INDENT_OUTPUT);
+        ObjectMapper xmlMapper = new XmlMapper();
+        xmlMapper.enable(SerializationFeature.INDENT_OUTPUT);
 
-        JsonSmsDeserializer jsonSmsDeserializer = new JsonSmsDeserializer();
-        File file = new File(FILE_PATH);
-        JsonSmsData jsonData = jsonSmsDeserializer.deserialize(jsonMapper, file);
+        // JSON
+        JsonSmsData jsonData = jsonDeserialize(jsonMapper, FILE_PATH);
 
         DataProcessor dataProcessor = new DataProcessor();
         Map<String, List<MessageInfo>> statistic = dataProcessor.process(jsonData);
@@ -39,10 +38,15 @@ public class Hw16App {
 
         System.out.println(jsonResult);
 
-        //XML
-        ObjectMapper xmlMapper = new XmlMapper();
-        xmlMapper.enable(SerializationFeature.INDENT_OUTPUT);
-
+        // XML
         statisticSerializer.serialize(SerializationFormat.XML, xmlMapper, statistic);
+    }
+
+    private static JsonSmsData jsonDeserialize(ObjectMapper jsonMapper,String filePath) throws IOException {
+        jsonMapper.enable(SerializationFeature.INDENT_OUTPUT);
+
+        JsonSmsDeserializer jsonSmsDeserializer = new JsonSmsDeserializer();
+        File file = new File(filePath);
+        return jsonSmsDeserializer.deserialize(jsonMapper, file);
     }
 }

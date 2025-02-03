@@ -9,26 +9,11 @@ import java.util.List;
 import java.util.Map;
 
 public class StatisticSerializer {
-    private String filePath;
-
     public void serialize(SerializationFormat format, ObjectMapper objectMapper, Map<String, List<MessageInfo>> statistic) {
-        checkFormat(format);
-
-        try (FileWriter writer = new FileWriter(filePath, false)) {
+        try (FileWriter writer = new FileWriter(format.getFilePath(), false)) {
             objectMapper.writeValue(writer, statistic);
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    private void checkFormat(SerializationFormat format) {
-        switch (format) {
-            case JSON:
-                filePath = "hw16-serialization/src/main/resources/result.json";
-                break;
-            case XML:
-                filePath = "hw16-serialization/src/main/resources/result.xml";
-                break;
         }
     }
 }
