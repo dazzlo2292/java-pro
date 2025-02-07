@@ -23,7 +23,7 @@ public class ActiveMqProducer {
         if (messageDto.getUuid() == null) {
             messageDto.setUuid(UUID.randomUUID());
         }
-        System.out.println("Produce [object] - [client] -> [active-mq] : " + messageDto);
+        log.info("Produce [object] - [client] -> [active-mq] : {}", messageDto);
         jmsTemplate.convertAndSend(ActiveMqConfig.DESTINATION_NAME, messageDto);
     }
 }

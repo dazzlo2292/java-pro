@@ -3,6 +3,7 @@ package ru.otus.java.pro.jms.services;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.jms.*;
+import lombok.extern.slf4j.Slf4j;
 import ru.otus.java.pro.jms.config.ActiveMqConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jms.annotation.JmsListener;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ActiveMqListener implements MessageListener {
@@ -44,13 +46,13 @@ public class ActiveMqListener implements MessageListener {
 
     private static void onSerializableObjectMessage(ObjectMessage message) throws JMSException {
         Serializable obj = message.getObject();
-        System.out.format("Consume [serializable] - [client] <- [active-mq] : %s\n", obj);
+        log.info("Consume [serializable] - [client] <- [active-mq] : {}", obj);
     }
 
     private void onCustomObjectMessage(Class<?> cls, ObjectMessage message)
             throws JMSException, JsonProcessingException {
         String json = String.valueOf(message.getObject());
         Object obj = objectMapper.readValue(json, cls);
-        System.out.format("Consume [%s] - [client] <- [active-mq] : %s\n", cls.getSimpleName(), obj);
+        log.info("Consume [{}] - [client] <- [active-mq] : {}", cls.getSimpleName(), obj);
     }
 }

@@ -10,8 +10,7 @@ import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 import org.springframework.jms.config.JmsListenerContainerFactory;
 import org.springframework.jms.core.JmsTemplate;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Configuration
@@ -21,8 +20,10 @@ public class ActiveMqConfig {
     public static final String JMS_TEMPLATE = "activeMqJmsTemplate";
     public static final String JMS_LISTENER_CONTAINER_FACTORY = "activeMqJmsListenerContainerFactory";
 
-    public static final String DESTINATION_NAME = "local.otus-java.messages.queue-1";
     public static final String CLASS_NAME = "className";
+
+    public static final String DESTINATION_NAME = "local.otus-java.messages.queue-1";
+
 
     @Bean(CONNECTION_FACTORY)
     public ConnectionFactory connectionFactory() {
@@ -30,7 +31,7 @@ public class ActiveMqConfig {
         connectionFactory.setBrokerURL("tcp://localhost:61616");
         connectionFactory.setUserName("jmx");
         connectionFactory.setPassword("password");
-        connectionFactory.setTrustedPackages(new ArrayList<>(Arrays.asList("ru.otus.java.pro.jms.dto,java.util".split(","))));
+        connectionFactory.setTrustedPackages(List.of("ru.otus.java.pro.jms.dto", "java.util"));
         return connectionFactory;
     }
 
